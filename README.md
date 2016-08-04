@@ -13,7 +13,7 @@ bundle
 cd client
 npm i
 cd ..
-foreman start
+rake start
 ```
 
 ## Overview
