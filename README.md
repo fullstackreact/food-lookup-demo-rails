@@ -24,4 +24,4 @@ In this example, the React component `App` makes a request to an API server (`se
 
 ![Flow diagram](./flow-diagram.png)
 
-This setup uses [node-foreman](https://github.com/strongloop/node-foreman) for process management. Executing `npm start` instructs Foreman to boot both the Webpack dev server and the API server.
+This setup uses [foreman](https://github.com/ddollar/foreman) for process management. Executing `foreman start` instructs Foreman to boot both the Webpack dev server and the API server.
