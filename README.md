@@ -13,7 +13,7 @@ bundle
 cd client
 npm i
 cd ..
-npm start
+foreman start
 ```
 
 ## Overview
