@@ -3,15 +3,15 @@ import React from 'react';
 import Client from './Client';
 
 const MATCHING_ITEM_LIMIT = 25;
-const FoodSearch = React.createClass({
-  getInitialState: function () {
-    return {
-      foods: [],
-      showRemoveIcon: false,
-      searchValue: '',
-    };
-  },
-  handleSearchChange: function (e) {
+
+class FoodSearch extends React.Component {
+  state = {
+    foods: [],
+    showRemoveIcon: false,
+    searchValue: '',
+  };
+
+  handleSearchChange = (e) => {
     const value = e.target.value;
 
     this.setState({
@@ -34,15 +34,33 @@ const FoodSearch = React.createClass({
         });
       });
     }
-  },
-  handleSearchCancel: function () {
+  };
+
+  handleSearchCancel = () => {
     this.setState({
       foods: [],
       showRemoveIcon: false,
       searchValue: '',
     });
-  },
-  render: function () {
+  };
+
+  render() {
+    const { showRemoveIcon, foods } = this.state;
+    const removeIconStyle = showRemoveIcon ? {} : { visibility: 'hidden' };
+
+    const foodRows = foods.map((food, idx) => (
+      <tr
+        key={idx}
+        onClick={() => this.props.onFoodClick(food)}
+      >
+        <td>{food.description}</td>
+        <td className='right aligned'>{food.kcal}</td>
+        <td className='right aligned'>{food.protein_g}</td>
+        <td className='right aligned'>{food.fat_g}</td>
+        <td className='right aligned'>{food.carbohydrate_g}</td>
+      </tr>
+    ));
+
     return (
       <div id='food-search'>
         <table className='ui selectable structured large table'>
@@ -60,14 +78,11 @@ const FoodSearch = React.createClass({
                     />
                     <i className='search icon' />
                   </div>
-                  {
-                    this.state.showRemoveIcon ? (
-                      <i
-                        className='remove icon'
-                        onClick={this.handleSearchCancel}
-                      />
-                    ) : ''
-                  }
+                  <i
+                    className='remove icon'
+                    onClick={this.handleSearchCancel}
+                    style={removeIconStyle}
+                  />
                 </div>
               </th>
             </tr>
@@ -80,25 +95,12 @@ const FoodSearch = React.createClass({
             </tr>
           </thead>
           <tbody>
-          {
-            this.state.foods.map((food, idx) => (
-              <tr
-                key={idx}
-                onClick={() => this.props.onFoodClick(food)}
-              >
-                <td>{food.description}</td>
-                <td className='right aligned'>{food.kcal}</td>
-                <td className='right aligned'>{food.protein_g}</td>
-                <td className='right aligned'>{food.fat_g}</td>
-                <td className='right aligned'>{food.carbohydrate_g}</td>
-              </tr>
-            ))
-          }
-        </tbody>
+            {foodRows}
+          </tbody>
         </table>
       </div>
     );
-  },
-});
+  }
+}
 
 export default FoodSearch;
